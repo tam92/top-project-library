@@ -3,17 +3,117 @@
     margin: 0;
 }
 
+body {
+    margin: 2em;
+    background-color: cornsilk;
+}
+
 ul {
     list-style: none;
 }
 
 .card {
     background-color: cornsilk;
-    margin: 10px;
-    padding: 10px;
+    padding: 1em 2em;
+    border-radius: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    color: darkblue;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+}
+
+.divCardRead, .divCardDelete {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
 }
 
 .icon {
     width: 20px;
     height: auto;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 3em;
+    margin: 1em;
+}
+
+#booksDisplay {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1em;
+    background-color: azure;
+    padding: 1em;
+    border-radius: 12px;
+}
+
+#formDisplay {
+    margin: auto;
+    width: 50em;
+    background-color: azure;
+    padding: 2em 4em;
+    color: darkblue;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#formDisplay ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+li#liRead {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    white-space: pre;
+}
+
+.lblWhiteSpace {
+    white-space: pre;
+}
+
+#formDisplay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#formDisplay ul li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#formDisplay ul li#liRead {
+    justify-content: left;
+}
+
+#inputTitle, #inputAuthor, #inputPages {
+    width: 30em;
+    border-radius: 8px;
+}
+
+div#divButton {
+    display: flex;
+    justify-content: center;
+    margin: 1em 0;
+}
+
+input#btnNewBook, input#btnAddNewBook {
+    background-color: darkblue;
+    color: aliceblue;
+    padding: 10px 2em;
+    border-radius: 12px;
+    border-style: none;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
 }

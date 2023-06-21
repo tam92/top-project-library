@@ -11,6 +11,18 @@ let myLibrary = [
         pages: 250,
         isRead: true
     },
+    {
+        title: "Harry Potter y la piedra filosofal",
+        author: "J.K. Rowling",
+        pages: 300,
+        isRead: true
+    },
+    {
+        title: "Harry Potter y la cámara secreta",
+        author: "J.K.Rowling",
+        pages: 305,
+        isRead: true
+    },
 ];
 
 addEventListenerBtnNewBook();
@@ -26,11 +38,14 @@ function addEventListenerBtnNewBook() {
 
 function showForm() {
     const display = document.getElementById("booksDisplay");
+    display.setAttribute("id", "formDisplay");
+
     const ul = document.createElement("ul");
     const liTitle = document.createElement("li");
     const liAuthor = document.createElement("li");
     const liPages = document.createElement("li");
     const liIsRead = document.createElement("li");
+    liIsRead.setAttribute("id", "liRead");
 
     const labelTitle = document.createElement("label");
     labelTitle.setAttribute('for', 'inputTitle');
@@ -51,8 +66,9 @@ function showForm() {
     ul.appendChild(liAuthor);
 
     const labelPages = document.createElement("label");
-    labelPages.setAttribute('for', 'inputTitle');
-    labelPages.textContent = "How many pages?"
+    labelPages.setAttribute('for', 'inputPages');
+    labelPages.setAttribute("class", "lblWhiteSpace")
+    labelPages.textContent = "How many pages?  "
     const inputPages = document.createElement('input');
     inputPages.setAttribute('id', "inputPages");
     liPages.appendChild(labelPages);
@@ -60,8 +76,8 @@ function showForm() {
     ul.appendChild(liPages);
 
     const labelIsRead = document.createElement("label");
-    labelIsRead.setAttribute('for', 'isRead');
-    labelIsRead.textContent = "Have you read it?"
+    labelIsRead.setAttribute('for', 'checkIsRead');
+    labelIsRead.textContent = "Mark as read  ";
     const inputIsRead = document.createElement('input');
     inputIsRead.setAttribute("type", "checkbox");
     inputIsRead.setAttribute('id', "checkIsRead");
@@ -99,6 +115,11 @@ function showForm() {
 }
 
 function cleanDisplay() {
+
+    if (document.getElementById("formDisplay")) {
+        document.getElementById("formDisplay").setAttribute("id", "booksDisplay");
+    }
+
     const display = document.getElementById("booksDisplay");
     while (display.firstChild) {
         display.removeChild(display.firstChild);
@@ -137,23 +158,38 @@ function displayBooks(bookArray) {
         pagesP.textContent = `Pages: ${book.pages}`;
         card.appendChild(pagesP);
 
+        const divRead = document.createElement('div');
+        divRead.setAttribute("class", "divCardRead");
+
         const isReadCheck = document.createElement('input');
         const lblIsRead = document.createElement("label");
+        lblIsRead.setAttribute("for", `checkIsRead${index}`);
+        lblIsRead.setAttribute("class", "lblWhiteSpace");
         isReadCheck.setAttribute("type", `checkbox`);
         isReadCheck.setAttribute("id", `checkIsRead${index}`);
         isReadCheck.setAttribute("data-bookIndex", index);
         
-        lblIsRead.textContent = "Have you read it?";
+        lblIsRead.textContent = "Have you read it?  ";
         isReadCheck.checked = book.isRead;
-        card.appendChild(lblIsRead);
-        card.appendChild(isReadCheck);
+        divRead.appendChild(lblIsRead);
+        divRead.appendChild(isReadCheck);
+        card.appendChild(divRead);
+
+        const divDelete = document.createElement('div');
+        divDelete.setAttribute("class", "divCardDelete");
 
         const btnDeleteBook = document.createElement("input");
         btnDeleteBook.setAttribute("type", "image");
         btnDeleteBook.setAttribute("id", `btnDeleteBook${index}`);
         btnDeleteBook.setAttribute("src", "icons/delete.svg");
         btnDeleteBook.setAttribute("class", "icon");
-        card.appendChild(btnDeleteBook);
+        const lblDeleteBook = document.createElement("label");
+        lblDeleteBook.textContent = "Delete book  ";
+        lblDeleteBook.setAttribute("for", `btnDeleteBook${index}`);
+        lblDeleteBook.setAttribute("class", "lblWhiteSpace");
+        divDelete.appendChild(lblDeleteBook);
+        divDelete.appendChild(btnDeleteBook);
+        card.appendChild(divDelete);
 
         display.appendChild(card);
 
