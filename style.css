@@ -3,3 +3,12 @@
     margin: 0;
 }
 
+ul {
+    list-style: none;
+}
+
+.card {
+    background-color: cornsilk;
+    margin: 10px;
+    padding: 10px;
+}
