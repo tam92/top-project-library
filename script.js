@@ -30,10 +30,12 @@ displayBooks(myLibrary);
 
 function addEventListenerBtnNewBook() {
     const btnNewBook = document.querySelector("#btnNewBook");
-    btnNewBook.addEventListener('click', () => {
-        cleanDisplay();
-        showForm();
-    });
+    btnNewBook.addEventListener('click', fnEventListenerBtnNewBook);
+}
+
+function fnEventListenerBtnNewBook() {
+    cleanDisplay();
+    showForm();
 }
 
 function showForm() {
@@ -115,6 +117,7 @@ function showForm() {
 }
 
 function cleanDisplay() {
+    document.getElementById("btnNewBook").removeEventListener('click', fnEventListenerBtnNewBook);
 
     if (document.getElementById("formDisplay")) {
         document.getElementById("formDisplay").setAttribute("id", "booksDisplay");
@@ -219,14 +222,30 @@ function addEventListenerCheckIsRead(book, index) {
     });
 }
 
-// Book Constructor
-function Book(title, author, pages, isRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
+// Book Class
+class Book {
+    constructor(title, author, pages, isRead) {
+        this._title = title;
+        this._author = author;
+        this._pages = pages;
+        this._isRead = isRead;
+    }
 
-    this.info = function() {
+    // Getters and setters
+    get title() {return this._title;}
+    set title(title) {this._title = title;}
+    
+    get author() {return this._author;}
+    set author(author) {this._author = author;}
+
+    get pages() {return this._pages;}
+    set pages(pages) {this._pages = pages;}
+
+    get isRead() {return this._isRead;}
+    set isRead(isRead) {this._isRead = isRead;}
+
+    // Class methods
+    info() {
         return `${title} by ${author}, ${pages} pages, ${isRead ? "read." : "not read yet."}`;
     }
 } 
