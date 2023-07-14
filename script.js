@@ -1,33 +1,44 @@
+// Book Class
+class Book {
+    constructor(title, author, pages, isRead) {
+        this._title = title;
+        this._author = author;
+        this._pages = pages;
+        this._isRead = isRead;
+    }
+
+    // Getters and setters
+    get title() {return this._title;}
+    set title(title) {this._title = title;}
+    
+    get author() {return this._author;}
+    set author(author) {this._author = author;}
+
+    get pages() {return this._pages;}
+    set pages(pages) {this._pages = pages;}
+
+    get isRead() {return this._isRead;}
+    set isRead(isRead) {this._isRead = isRead;}
+
+    // Class methods
+    info() {
+        return `${title} by ${author}, ${pages} pages, ${isRead ? "read." : "not read yet."}`;
+    }
+} 
+
 let myLibrary = [
-    {
-        title: "The Hobbit",
-        author: "J.R.R. Tolkien",
-        pages: "295",
-        isRead: false
-    },
-    {
-        title: "La Odisea",
-        author: "Homero",
-        pages: 250,
-        isRead: true
-    },
-    {
-        title: "Harry Potter y la piedra filosofal",
-        author: "J.K. Rowling",
-        pages: 300,
-        isRead: true
-    },
-    {
-        title: "Harry Potter y la cámara secreta",
-        author: "J.K.Rowling",
-        pages: 305,
-        isRead: true
-    },
+    new Book("The Hobbit", "J.R.R. Tolkien", "295", false), 
+    new Book("La Odisea", "Homero", "250", true), 
+    new Book("Harry Potter y la piedra filosofal", "J.K. Rowling", "300", true), 
+    new Book("Harry Potter y la cámara secreta", "J.K. Rowling", "305", true)
 ];
 
 addEventListenerBtnNewBook();
 displayBooks(myLibrary);
 
+// =============================================================================
+// ----------------------------- FUNCTIONS -------------------------------------
+// =============================================================================
 function addEventListenerBtnNewBook() {
     const btnNewBook = document.querySelector("#btnNewBook");
     btnNewBook.addEventListener('click', fnEventListenerBtnNewBook);
@@ -105,12 +116,7 @@ function showForm() {
         const pages = document.getElementById("inputPages").value;
         const isRead = document.getElementById("checkIsRead").checked;
 
-        const book = {
-            title: title,
-            author: author,
-            pages: pages,
-            isRead: isRead
-        }
+        const book = new Book(title, author, pages, isRead);
 
         addBookToLibrary(book);
     });
@@ -133,6 +139,7 @@ function addBookToLibrary(book) {
     myLibrary.push(book);
     cleanDisplay();
     displayBooks(myLibrary);
+    console.log(myLibrary);
 
     const btnNewBook = document.getElementById("btnNewBook");
     btnNewBook.style.visibility = "visible";
@@ -221,31 +228,3 @@ function addEventListenerCheckIsRead(book, index) {
         }
     });
 }
-
-// Book Class
-class Book {
-    constructor(title, author, pages, isRead) {
-        this._title = title;
-        this._author = author;
-        this._pages = pages;
-        this._isRead = isRead;
-    }
-
-    // Getters and setters
-    get title() {return this._title;}
-    set title(title) {this._title = title;}
-    
-    get author() {return this._author;}
-    set author(author) {this._author = author;}
-
-    get pages() {return this._pages;}
-    set pages(pages) {this._pages = pages;}
-
-    get isRead() {return this._isRead;}
-    set isRead(isRead) {this._isRead = isRead;}
-
-    // Class methods
-    info() {
-        return `${title} by ${author}, ${pages} pages, ${isRead ? "read." : "not read yet."}`;
-    }
-} 
