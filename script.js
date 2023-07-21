@@ -1,4 +1,4 @@
-// Book Class
+// Book Class with getters and setters
 class Book {
     constructor(title, author, pages, isRead) {
         this._title = title;
@@ -26,6 +26,7 @@ class Book {
     }
 } 
 
+// Hardcoded library
 let myLibrary = [
     new Book("The Hobbit", "J.R.R. Tolkien", "295", false), 
     new Book("La Odisea", "Homero", "250", true), 
@@ -33,16 +34,53 @@ let myLibrary = [
     new Book("Harry Potter and the goblet of fire", "J.K. Rowling", "455", true)
 ];
 
-addEventListenerBtnNewBook();
 displayBooks(myLibrary);
 
 // =============================================================================
 // ----------------------------- FUNCTIONS -------------------------------------
 // =============================================================================
+
+function addBookToLibrary(book) {
+    document.getElementById("btnAddNewBook").removeEventListener('click', addNewBk);
+    myLibrary.push(book);
+    cleanDisplay();
+    displayBooks(myLibrary);
+    console.log(myLibrary);
+
+    const btnNewBook = document.getElementById("btnNewBook");
+    btnNewBook.style.visibility = "visible";
+
+    addEventListenerBtnNewBook();
+}
+
+function addNewBk () {
+    const title = document.getElementById("inputTitle").value;
+    const author = document.getElementById("inputAuthor").value;
+    const pages = document.getElementById("inputPages").value;
+    const isRead = document.getElementById("checkIsRead").checked;
+
+    const book = new Book(title, author, pages, isRead);
+
+    addBookToLibrary(book);
+}
+
 function addEventListenerBtnNewBook() {
     const btnNewBook = document.querySelector("#btnNewBook");
     btnNewBook.addEventListener('click', fnEventListenerBtnNewBook);
     btnNewBook.removeEventListener('click', addEventListenerBtnNewBook);
+}
+
+function addEventListenerDeleteBook(index) {
+    const btnDeleteBook = document.querySelector(`#btnDeleteBook${index}`);
+    btnDeleteBook.addEventListener("click", addEvListDeleteBookBtn);
+    btnDeleteBook.myIndex = index;
+}
+
+function addEventListenerCheckIsRead(book, index) {
+    const checkIsRead = document.querySelector(`#checkIsRead${index}`);
+    checkIsRead.addEventListener('click', changeReadStatus);
+    checkIsRead.myIndex = index;
+
 }
 
 function fnEventListenerBtnNewBook() {
@@ -114,17 +152,6 @@ function showForm() {
     btnAddNewBook.addEventListener('click', addNewBk);
 }
 
-function addNewBk () {
-    const title = document.getElementById("inputTitle").value;
-    const author = document.getElementById("inputAuthor").value;
-    const pages = document.getElementById("inputPages").value;
-    const isRead = document.getElementById("checkIsRead").checked;
-
-    const book = new Book(title, author, pages, isRead);
-
-    addBookToLibrary(book);
-}
-
 function cleanDisplay() {
     document.getElementById("btnNewBook").removeEventListener('click', fnEventListenerBtnNewBook);
 
@@ -138,21 +165,8 @@ function cleanDisplay() {
     }
 }
 
-function addBookToLibrary(book) {
-    document.getElementById("btnAddNewBook").removeEventListener('click', addNewBk);
-    myLibrary.push(book);
-    cleanDisplay();
-    displayBooks(myLibrary);
-    console.log(myLibrary);
-
-    const btnNewBook = document.getElementById("btnNewBook");
-    btnNewBook.style.visibility = "visible";
-
-    addEventListenerBtnNewBook();
-}
-
 function displayBooks(bookArray) {
-    
+    addEventListenerBtnNewBook();
     const display = document.getElementById("booksDisplay");
 
     bookArray.forEach((book, index) => {
@@ -212,27 +226,14 @@ function displayBooks(bookArray) {
     });
 }
 
-function addEventListenerDeleteBook(index) {
-    const btnDeleteBook = document.querySelector(`#btnDeleteBook${index}`);
-    btnDeleteBook.addEventListener("click", addEvListDeleteBookBtn);
-    btnDeleteBook.myIndex = index;
-}
-
-function addEvListDeleteBookBtn (evt) {
-    const index = evt.currentTarget.myIndex;
-    document.querySelector(`#btnDeleteBook${evt.currentTarget.myIndex}`).removeEventListener('click', addEvListDeleteBookBtn);
+function addEvListDeleteBookBtn (event) {
+    const index = event.currentTarget.myIndex;
+    document.querySelector(`#btnDeleteBook${event.currentTarget.myIndex}`).removeEventListener('click', addEvListDeleteBookBtn);
     document.querySelector(`#checkIsRead${event.currentTarget.myIndex}`).removeEventListener('click', changeReadStatus);
     myLibrary.splice(index, 1);
     cleanDisplay();
     addEventListenerBtnNewBook();
     displayBooks(myLibrary);
-}
-
-function addEventListenerCheckIsRead(book, index) {
-    const checkIsRead = document.querySelector(`#checkIsRead${index}`);
-    checkIsRead.addEventListener('click', changeReadStatus);
-    checkIsRead.myIndex = index;
-
 }
 
 function changeReadStatus(event) {
@@ -242,5 +243,4 @@ function changeReadStatus(event) {
     } else {
         myLibrary[index].isRead = true;
     }
-    
 }
