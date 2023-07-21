@@ -54,12 +54,11 @@ function addBookToLibrary(book) {
 }
 
 function addNewBk () {
-    const title = document.getElementById("inputTitle").value;
-    const author = document.getElementById("inputAuthor").value;
-    const pages = document.getElementById("inputPages").value;
-    const isRead = document.getElementById("checkIsRead").checked;
-
-    const book = new Book(title, author, pages, isRead);
+    let book = new Book();
+    book.title = document.getElementById("inputTitle").value;
+    book.author = document.getElementById("inputAuthor").value;
+    book.pages = document.getElementById("inputPages").value;
+    book.isRead = document.getElementById("checkIsRead").checked;
 
     addBookToLibrary(book);
 }
