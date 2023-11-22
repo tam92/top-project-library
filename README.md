@@ -5,8 +5,10 @@ This is my take on the project "Library", from The Odin Project.
 
 + Add a book.
     - Parameters accepted: title, author, pages, and read status.
+    - Validate inputs: title, author and pages.
 + Mark if the book has been read or not.
 + Delete an added book.
+
 
 ## Media used
 
