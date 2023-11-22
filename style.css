@@ -117,3 +117,18 @@ input#btnNewBook, input#btnAddNewBook {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   
 }
+
+input:invalid {
+    background-color: ivory;
+    border: none;
+    outline: 2px solid red;
+    border-radius: 5px;
+}
+
+span.error {
+    height: fit-content;
+    color: red;
+    font-size: 75%;
+    display: flex;
+    justify-content: center;
+}

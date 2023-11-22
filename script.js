@@ -53,16 +53,16 @@ function addBookToLibrary(book) {
     addEventListenerBtnNewBook();
 }
 
-function addNewBk () {
+function addNewBk (title, author, pages, isRead) {
     let book = new Book();
-    book.title = document.getElementById("inputTitle").value;
-    book.author = document.getElementById("inputAuthor").value;
-    book.pages = document.getElementById("inputPages").value;
-    book.isRead = document.getElementById("checkIsRead").checked;
+        book.title = title
+        book.author = author
+        book.pages = pages
+        book.isRead = isRead
 
     addBookToLibrary(book);
-}
-
+    }
+    
 function addEventListenerBtnNewBook() {
     const btnNewBook = document.querySelector("#btnNewBook");
     btnNewBook.addEventListener('click', fnEventListenerBtnNewBook);
@@ -103,18 +103,34 @@ function showForm() {
     labelTitle.textContent = "Title: ";
     const inputTitle = document.createElement('input');
     inputTitle.setAttribute('id', "inputTitle");
+    inputTitle.setAttribute("required", true);
     liTitle.appendChild(labelTitle);
     liTitle.appendChild(inputTitle);
     ul.appendChild(liTitle);
+
+    // Span for title error
+    const spanTitle = document.createElement("span");
+    spanTitle.setAttribute("id", "spanTitle")
+    spanTitle.classList.add("error");
+    spanTitle.setAttribute("aria-live", "polite");
+    ul.appendChild(spanTitle);
 
     const labelAuthor = document.createElement("label");
     labelAuthor.setAttribute('for', 'inputAuthor');
     labelAuthor.textContent = "Author: ";
     const inputAuthor = document.createElement('input');
     inputAuthor.setAttribute('id', "inputAuthor");
+    inputAuthor.setAttribute("required", true)
     liAuthor.appendChild(labelAuthor);
     liAuthor.appendChild(inputAuthor);
     ul.appendChild(liAuthor);
+
+    // Span for author error
+    const spanAuthor = document.createElement("span");
+    spanAuthor.setAttribute("id", "spanAuthor")
+    spanAuthor.classList.add("error");
+    spanAuthor.setAttribute("aria-live", "polite");
+    ul.appendChild(spanAuthor);
 
     const labelPages = document.createElement("label");
     labelPages.setAttribute('for', 'inputPages');
@@ -122,9 +138,19 @@ function showForm() {
     labelPages.textContent = "How many pages?  "
     const inputPages = document.createElement('input');
     inputPages.setAttribute('id', "inputPages");
+    inputPages.setAttribute("type", "number")
+    inputPages.setAttribute("required", true);
+    inputPages.setAttribute("min", 1)
     liPages.appendChild(labelPages);
     liPages.appendChild(inputPages);
     ul.appendChild(liPages);
+
+    // Span for pages error
+    const spanPages = document.createElement("span");
+    spanPages.classList.add("error");
+    spanPages.setAttribute("id", "spanPages")
+    spanPages.setAttribute("aria-live", "polite");
+    ul.appendChild(spanPages);
 
     const labelIsRead = document.createElement("label");
     labelIsRead.setAttribute('for', 'checkIsRead');
@@ -148,7 +174,47 @@ function showForm() {
     btnNewBook.style.visibility = "hidden";
 
     const btnAddNewBook = document.querySelector("#btnAddNewBook");
-    btnAddNewBook.addEventListener('click', addNewBk);
+    btnAddNewBook.addEventListener('click', formValidation);
+}
+
+function formValidation() {
+    let title, author, pages;
+    // Validating title
+    if (inputTitle.validity.valueMissing) {
+        inputTitle.setCustomValidity("The title can't be empty!");
+        spanTitle.textContent = "Please, fill out the title!"
+        title = "";
+    } else {
+        spanTitle.textContent = "";
+        inputTitle.setCustomValidity("")
+        title = inputTitle.value;
+    }
+
+    // Validating author
+    if (inputAuthor.validity.valueMissing) {
+        inputAuthor.setCustomValidity("The author can't be empty!");
+        spanAuthor.textContent = "Please, fill out the author!"
+        author = "";
+    } else {
+        spanAuthor.textContent = "";
+        inputAuthor.setCustomValidity("")
+        author = inputAuthor.value;
+    }
+
+    // Validating pages
+    if (inputPages.validity.valueMissing || inputPages.validity.rangeUnderflow || inputPages.validity.badInput ) {
+        inputPages.setCustomValidity("The pages field can't be empty!");
+        spanPages.textContent = "The number of pages must be a number greater than 0."
+        pages = ""
+    } else {
+        spanPages.textContent = "";
+        inputPages.setCustomValidity("")
+        pages = inputPages.value;
+    }
+
+    if (title !== "" && author !== "" && pages !== "") {
+        addNewBk(title, author, pages, checkIsRead.checked)
+    }
 }
 
 function cleanDisplay() {
